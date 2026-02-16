@@ -10,6 +10,9 @@ import Animated, { FadeIn, FadeInDown } from "react-native-reanimated";
 
 const Welcome = () => {
   const router = useRouter();
+  const onSignUp = () => {
+    router.push("/(auth)/register");
+  };
   return (
     <ScreenWrapper>
       <View style={styles.container}>
@@ -61,7 +64,7 @@ const Welcome = () => {
             entering={FadeInDown.duration(1000).delay(200).damping(12)}
             style={styles.buttonContainer}
           >
-            <Button onPressIn={() => router.push("/(auth)/register")}>
+            <Button onPress={onSignUp}>
               <Typo size={22} color={colors.neutral900} fontWeight={"600"}>
                 Get Started
               </Typo>

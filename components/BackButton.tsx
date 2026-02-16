@@ -1,4 +1,4 @@
-import { colors } from "@/constants/theme";
+import { colors, radius } from "@/constants/theme";
 import { BackButtonProps } from "@/types";
 import { verticalScale } from "@/utils/styling";
 import { useRouter } from "expo-router";
@@ -25,5 +25,11 @@ const BackButton = ({ style, iconSize = 26 }: BackButtonProps) => {
 export default BackButton;
 
 const styles = StyleSheet.create({
-  button: {},
+  button: {
+    backgroundColor: colors.neutral600,
+    alignSelf: "flex-start",
+    borderRadius: radius._12,
+    borderCurve: "continuous",
+    padding: 4,
+  },
 });
