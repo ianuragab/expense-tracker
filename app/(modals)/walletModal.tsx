@@ -6,7 +6,7 @@ import Input from "@/components/Input";
 import ModalWrapper from "@/components/ModalWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingY } from "@/constants/theme";
-import { useAuth } from "@/contexts/authcontext";
+import { useAuth } from "@/contexts/authContext";
 import { createOrUpdateWallet } from "@/services/walletService";
 import { WalletType } from "@/types";
 import { scale, verticalScale } from "@/utils/styling";

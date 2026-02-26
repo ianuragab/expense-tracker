@@ -1,6 +1,6 @@
 import ScreenWrapper from "@/components/ScreenWrapper";
 import Typo from "@/components/Typo";
-import { useAuth } from "@/contexts/authcontext";
+import { useAuth } from "@/contexts/authContext";
 import React from "react";
 import { StyleSheet } from "react-native";
 

@@ -5,7 +5,7 @@ import Input from "@/components/Input";
 import ModalWrapper from "@/components/ModalWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingY } from "@/constants/theme";
-import { useAuth } from "@/contexts/authcontext";
+import { useAuth } from "@/contexts/authContext";
 import { getProfileImage } from "@/services/imageService";
 import { updateUser } from "@/services/userService";
 import { UserDataType } from "@/types";

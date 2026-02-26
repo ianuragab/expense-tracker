@@ -1,4 +1,5 @@
-import { AuthProvider } from "@/contexts/authcontext";
+
+import { AuthProvider } from "@/contexts/authContext";
 import { Stack } from "expo-router";
 import React from "react";
 
