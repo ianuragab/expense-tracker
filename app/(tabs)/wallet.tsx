@@ -18,17 +18,18 @@ const Wallet = () => {
   const { user } = useAuth();
 
   const { data: wallets, isLoading, error } = useFetchData<WalletType>('wallets', [where('uid', '==', user?.uid), orderBy('created', 'desc')])
-  
+
   const getTotalBalance = () => {
-    return 2390;
+    return wallets.reduce((acc, curr) => acc + (curr.amount || 0), 0);
   };
+  
   return (
     <ScreenWrapper style={{ backgroundColor: colors.black }}>
       <View style={styles.container}>
         <View style={styles.balanceView}>
           <View style={{ alignItems: "center" }}>
             <Typo size={44} fontWeight={500}>
-              ₹ {getTotalBalance().toFixed(2)}
+              ₹ {getTotalBalance()?.toFixed(2)}
             </Typo>
             <Typo size={16} color={colors.neutral300}>
               Total Balance
@@ -53,9 +54,9 @@ const Wallet = () => {
           </View>
 
           {isLoading ? <Loading /> : (
-            <FlatList data={wallets} renderItem={({item, index}) => {
+            <FlatList data={wallets} renderItem={({ item, index }) => {
               return <WalletListItem index={index} item={item} router={router} />
-            }}/>
+            }} />
           )}
         </View>
       </View>

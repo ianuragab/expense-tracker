@@ -11,12 +11,24 @@ import Typo from './Typo'
 
 const WalletListItem = ({
   item, index, router
-}: {item: WalletType, index: number, router: Router}) => {
+}: { item: WalletType, index: number, router: Router }) => {
+
+  const openWallet = () => {
+    router.push({
+      pathname: `/(modals)/walletModal`,
+      params: {
+        id: item?.id,
+        name: item?.name,
+        image: item?.image,
+      }
+    }
+    )
+  }
   return (
     <Animated.View entering={FadeInDown.delay(index * 50).damping(12)} >
-      <TouchableOpacity style={styles.container} onPress={() => {}}>
+      <TouchableOpacity style={styles.container} onPress={openWallet}>
         <View style={styles.imageContainer} >
-          <Image source={item?.image} style={{flex: 1}} contentFit='cover' transition={100} />
+          <Image source={item?.image} style={{ flex: 1 }} contentFit='cover' transition={100} />
         </View>
 
         <View style={styles.nameContainer}>
@@ -28,7 +40,7 @@ const WalletListItem = ({
       </TouchableOpacity>
     </Animated.View>
   )
-} 
+}
 
 export default WalletListItem
 
@@ -37,7 +49,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: verticalScale(17),
-  }, 
+  },
   imageContainer: {
     width: verticalScale(45),
     height: verticalScale(45),
@@ -49,7 +61,7 @@ const styles = StyleSheet.create({
   },
   nameContainer: {
     flex: 1,
-    gap:2,
+    gap: 2,
     marginLeft: spacingX._10
   }
 })
