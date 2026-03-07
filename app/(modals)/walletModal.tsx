@@ -7,7 +7,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
 import { useAuth } from "@/contexts/authContext";
-import { createOrUpdateWallet } from "@/services/walletService";
+import { createOrUpdateWallet, deleteWallet } from "@/services/walletService";
 import { WalletType } from "@/types";
 import { scale, verticalScale } from "@/utils/styling";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -33,7 +33,7 @@ const WalletModal = () => {
         image: oldWallet?.image,
       })
     }
-  }, [oldWallet])
+  }, [])
 
   const onSubmit = async () => {
     let { name, image } = wallet;
@@ -60,13 +60,12 @@ const WalletModal = () => {
 
   const onDelete = async () => {
     if (!oldWallet?.id) return;
-
+    setIsLoading(true);
     console.log('Deleting wallet: ', oldWallet?.id)
-    try {
-      
-    } catch (error) {
-      console.log(error)
-    }
+    const res = await deleteWallet(oldWallet?.id);
+    if (res?.success) router.back();
+    else Alert.alert("Wallet", res?.msg);
+    setIsLoading(false);
   }
 
   const showDeleteAlert = () => {
@@ -107,7 +106,7 @@ const WalletModal = () => {
       </View>
 
       <View style={styles.footer}>
-        {oldWallet?.id ? (
+        {oldWallet?.id && !isLoading ? (
           <Button onPress={showDeleteAlert} style={{ backgroundColor: colors.rose, paddingHorizontal: spacingX._15 }}>
             <Icons.TrashIcon weight="bold" size={verticalScale(24)} color={colors.white} />
           </Button>

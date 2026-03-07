@@ -17,12 +17,12 @@ const Wallet = () => {
   const router = useRouter();
   const { user } = useAuth();
 
-  const { data: wallets, isLoading, error } = useFetchData<WalletType>('wallets', [where('uid', '==', user?.uid), orderBy('created', 'desc')])
+  const { data: wallets, isLoading, error } = useFetchData<WalletType>('wallets', [where('uid', '==', user?.uid), orderBy('created', 'desc')]);
 
   const getTotalBalance = () => {
     return wallets.reduce((acc, curr) => acc + (curr.amount || 0), 0);
   };
-  
+
   return (
     <ScreenWrapper style={{ backgroundColor: colors.black }}>
       <View style={styles.container}>
