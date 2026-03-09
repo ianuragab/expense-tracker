@@ -1,8 +1,9 @@
 import { expenseCategories, incomeCategory } from '@/constants/data'
 import { colors, radius, spacingX, spacingY } from '@/constants/theme'
-import { TransactionItemProps, TransactionListType } from '@/types'
+import { TransactionItemProps, TransactionListType, TransactionType } from '@/types'
 import { verticalScale } from '@/utils/styling'
 import { FlashList } from '@shopify/flash-list'
+import { useRouter } from 'expo-router'
 import { Timestamp } from 'firebase/firestore'
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -11,8 +12,10 @@ import Loading from './Loading'
 import Typo from './Typo'
 
 const TransactionList = ({ data, title, loading, emptyListMessage }: TransactionListType) => {
-  const handleClick = () => {
-    // handle click on transaction item
+  const router = useRouter();
+
+  const handleClick = (item: TransactionType) => {
+    router.push({ pathname: '/(modals)/transactionModal', params: { id: item?.id, type: item?.type, amount: item?.amount?.toString(), category: item?.category, date: (item?.date as Timestamp)?.toDate()?.toISOString(), description: item?.description, image: item?.image, uid: item?.uid, walletId: item?.walletId } })
   }
   return (
     <View style={styles.container}>
