@@ -6,7 +6,7 @@ import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
 import { useAuth } from "@/contexts/authContext";
 import useFetchData from "@/hooks/useFetchData";
-import { TransactionListType } from "@/types";
+import { TransactionType } from "@/types";
 import { verticalScale } from "@/utils/styling";
 import { useRouter } from "expo-router";
 import { limit, orderBy, where } from "firebase/firestore";
@@ -24,7 +24,7 @@ const Home = () => {
     limit(30)
   ];
 
-  const {data: recentTransactions, isLoading: transLoading} = useFetchData<TransactionListType>("transactions", constraints);
+  const {data: recentTransactions, isLoading: transLoading} = useFetchData<TransactionType>("transactions", constraints);
 
 
   return (
@@ -35,7 +35,7 @@ const Home = () => {
             <Typo size={16} color={colors.neutral400}>Hello, </Typo>
             <Typo size={20} fontWeight={500}>{user?.name}</Typo>
           </View>
-          <TouchableOpacity style={styles.searchIcon}>
+          <TouchableOpacity onPress={() => router.push("/(modals)/searchModal")} style={styles.searchIcon}>
             <Icons.MagnifyingGlassIcon weight="bold" size={verticalScale(20)} color={colors.neutral200} />
           </TouchableOpacity>
         </View>

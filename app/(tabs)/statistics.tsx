@@ -1,51 +1,65 @@
 import Header from "@/components/Header";
 import Loading from "@/components/Loading";
 import ScreenWrapper from "@/components/ScreenWrapper";
+import TransactionList from "@/components/TransactionList";
 import { colors, radius, spacingX, spacingY } from "@/constants/theme";
+import { useAuth } from "@/contexts/authContext";
+import { fetchMonthlyStats, fetchWeeklyStats, fetchYearlyStats } from "@/services/transactionService";
 import { scale, verticalScale } from "@/utils/styling";
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 
-const barData = [
-  {
-    value: 40, label: "Mon", spacing: scale(4), labelWidth: scale(30), frontColor: colors.primary, 
-    // topLabelComponent: () => (<Typo size={10} style={{ marginBottom: 1 }} fontWeight={'bold'}>40</Typo>)
-  }, { value: 20, frontColor: colors.rose },
-  {
-    value: 50, label: "Tue", spacing: scale(4), labelWidth: scale(30), frontColor: colors.primary
-  }, { value: 40, frontColor: colors.rose },
-  {
-    value: 70, label: "Wed", spacing: scale(4), labelWidth: scale(30), frontColor: colors.primary
-  }, { value: 25, frontColor: colors.rose },
-  {
-    value: 30, label: "Thu", spacing: scale(4), labelWidth: scale(30), frontColor: colors.primary
-  }, { value: 30, frontColor: colors.rose },
-  {
-    value: 60, label: "Fri", spacing: scale(4), labelWidth: scale(30), frontColor: colors.primary
-  }, { value: 40, frontColor: colors.rose },
-  {
-    value: 40, label: "Sat", spacing: scale(4), labelWidth: scale(30), frontColor: colors.primary
-  }, { value: 20, frontColor: colors.rose },
-  {
-    value: 75, label: "Sun", spacing: scale(4), labelWidth: scale(30), frontColor: colors.primary
-  }, { value: 50, frontColor: colors.rose },
-]
-
 const Statistics = () => {
+  const { user } = useAuth();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [chartData, setChartData] = useState(barData);
+  const [chartData, setChartData] = useState([]);
   const [chartLoading, setChartLoading] = useState(false);
+  const [transactions, setTransactions] = useState([]);
 
-  const getWeeklyStats = async () => {}
-  const getMonthlyStats = async () => {}
-  const getYearlyStats = async () => {}
+  const getWeeklyStats = async () => {
+    setChartLoading(true);
+    const res = await fetchWeeklyStats(user?.uid as string);
+    if (res.success) {
+      setChartData(res?.data?.stats || []);
+      setTransactions(res?.data?.transactions || []);
+    } else Alert.alert("Error", res.msg || "Error while fetching stats!");
+    setChartLoading(false);
+  }
+  const getMonthlyStats = async () => {
+    setChartLoading(true);
+    const res = await fetchMonthlyStats(user?.uid as string);
+    if (res.success) {
+      setChartData(res?.data?.stats || []);
+      setTransactions(res?.data?.transactions || []);
+    } else Alert.alert("Error", res.msg || "Error while fetching stats!");
+    setChartLoading(false);
+  }
+  const getYearlyStats = async () => {
+    setChartLoading(true);
+    const res = await fetchYearlyStats(user?.uid as string);
+    if (res.success) {
+      setChartData(res?.data?.stats || []);
+      setTransactions(res?.data?.transactions || []);
+    } else Alert.alert("Error", res.msg || "Error while fetching stats!");
+    setChartLoading(false);
+  }
 
   useEffect(() => {
-    if (activeIndex === 0) getWeeklyStats();
-    else if (activeIndex === 1) getMonthlyStats();
-    else getYearlyStats();
+    if (activeIndex === 0) {
+      setChartData([]);
+      setTransactions([]);
+      getWeeklyStats();
+    } else if (activeIndex === 1) {
+      setChartData([]);
+      setTransactions([]);
+      getMonthlyStats();
+    } else {
+      setChartData([]);
+      setTransactions([]);
+      getYearlyStats();
+    }
   }, [activeIndex]);
 
   return (
@@ -90,6 +104,11 @@ const Statistics = () => {
             {chartLoading && (
               <View style={styles.chartLoadingContainer}><Loading color={colors.white} /></View>
             )}
+          </View>
+
+          <View>
+            <TransactionList
+              title="Transactions" emptyListMessage="No transactions found" data={transactions} loading={chartLoading} />
           </View>
         </ScrollView>
 

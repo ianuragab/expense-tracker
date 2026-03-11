@@ -6,6 +6,10 @@ import React from "react";
 const StackLayout = () => {
   return (
     <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+
       <Stack.Screen
         name="(modals)/profileModal"
         options={{ presentation: "modal" }}
@@ -18,6 +22,11 @@ const StackLayout = () => {
 
       <Stack.Screen
         name="(modals)/transactionModal"
+        options={{ presentation: "modal" }}
+      />
+
+      <Stack.Screen
+        name="(modals)/searchModal"
         options={{ presentation: "modal" }}
       />
     </Stack>
