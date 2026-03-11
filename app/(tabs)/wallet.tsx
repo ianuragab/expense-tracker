@@ -3,7 +3,7 @@ import ScreenWrapper from "@/components/ScreenWrapper";
 import Typo from "@/components/Typo";
 import WalletListItem from "@/components/WalletListItem";
 import { colors, radius, spacingY } from "@/constants/theme";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/AuthContext";
 import useFetchData from "@/hooks/useFetchData";
 import { WalletType } from "@/types";
 import { verticalScale } from "@/utils/styling";

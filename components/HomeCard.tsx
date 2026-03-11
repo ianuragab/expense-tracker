@@ -1,5 +1,5 @@
 import { colors, spacingX, spacingY } from '@/constants/theme'
-import { useAuth } from '@/contexts/authContext'
+import { useAuth } from '@/contexts/AuthContext'
 import useFetchData from '@/hooks/useFetchData'
 import { WalletType } from '@/types'
 import { scale, verticalScale } from '@/utils/styling'

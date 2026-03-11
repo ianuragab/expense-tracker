@@ -4,7 +4,7 @@ import Input from "@/components/Input";
 import ModalWrapper from "@/components/ModalWrapper";
 import TransactionList from "@/components/TransactionList";
 import { colors, spacingY } from "@/constants/theme";
-import { useAuth } from "@/contexts/authContext";
+import { useAuth } from "@/contexts/AuthContext";
 import useFetchData from "@/hooks/useFetchData";
 import { TransactionType } from "@/types";
 import { limit, orderBy, where } from "firebase/firestore";
